@@ -72,10 +72,54 @@ Por último, se concreta el DER.
 
 Finalmente, se realiza la conexión con BigQuery y se importan las tablas del dataset de la silver-layer: silver-layer-435402.ny_trips. Debido al volumen del dataset, particularmente de la tabla fact (30MM rows), se realizan modificaciones como la segmentación de fechas solo para el 2022 y la exclusión de todos los registros de un vendor_id.
 
-Transformaciones
+**Transformaciones**
 - Cargado el dataset la primera transformación realizada es la eliminación de la columna de trip_id para optimizar recursos, dado que era un ID con muchos caracteres, y su reemplazo por un ID incremental que luego se reordena para llevar al principio.
 - Creación de la tabla calendario
+![image](https://github.com/user-attachments/assets/5d680919-c3ed-42f3-8065-7296f1164a85)
+- Creación de la tabla 'Medidas' y la creación de las medidas que serán empleadas en el repore dentro de la misma
+Las mismas se detallan a continuación por categoría:
+**Economics**
+Airport fee total = sum(Fact_Trips1[airport_fee]) 
+avg fare = average(Fact_Trips1[fare_amount])
+avg tip = AVERAGE(Fact_Trips1[tip_amount])
+Tip total = sum(Fact_Trips1[tip_amount])
+Fare total = sum(Fact_Trips1[fare_amount])
+Imp surcharge total = sum(Fact_Trips1[imp_surcharge])
+Monto Total = sum(Fact_Trips1[total_amount])
+MTA Total = sum(Fact_Trips1[mta_tax])
+Tolls total = sum(Fact_Trips1[tolls_amount])
+Total profit = sum(Fact_Trips1[total_profit])
+Trips w/o tip = 
+CALCULATE(
+    COUNTROWS(Fact_Trips1), 
+    Fact_Trips1[tip_amount] = 0 )
+Trips with tip = 
+CALCULATE(
+    COUNTROWS(Fact_Trips1), 
+    Fact_Trips1[tip_amount] > 0 )
+**Demand**
+Total trips = COUNT(Fact_Trips1[trip_id])
+Trips per day = [Total trips]/31
 
+## Visualización: creación del dashboard en Power BI
 
+La estética del reporte busca simular la estética de los taxis con una paleta de colores que varía entre distintos tonos de amarillo, negro, gris y celeste, haciendo uso de los colores menos fuertes para los kpis de menor jerarquía en el análisis y empleando aquellos más fueres en las principales métricas.
 
-  
+Realizadas las transformaciones y medidas se definen 4 secciones del reporte:
+1. Introducción: título y botonera de páginas
+![image](https://github.com/user-attachments/assets/9be63233-b27c-482c-b4a4-6ce11fcce991)
+
+2. Economics: en esta sección se incluyen las métricas a través de las cuales se puede realizar un análisis financiero de la operación de taxis. 
+![image](https://github.com/user-attachments/assets/6bcf663e-9446-4841-a1c2-a8e07aabff89)
+
+En el primer gráfico del margen superior izquierdo se realiza una comparativa del total de facturación bruto y la ganancia efectiva para el conductor de los últimos 12 meses, mientras que en el contiguo se visualiza la composición segun cada concepto de la facturación total, en donde se puede ver desagregado cuánto representa cada uno y su variación MoM. Los dos últimos gráficos representan por un lado el share de viajes que tuvieron propina por mes y en el último caso la variación mensual de la trifa promedio. Asimismo, se aplicaron tres filtros para visualizar la información por zona, vendor o determinados meses.
+
+3. Demand: en esta sección se incluyen las métricas que corresponden al análisis de la demanda de taxis.
+![image](https://github.com/user-attachments/assets/cae07824-a2d7-4e28-8520-191761517911)
+
+El primer gráfico corresponde a la variación mensual de Q de viajes realizados, seguido de la variación de viajes de acuerdo al día de la semana y, por último la variación de viajes diarios promedios. Se suman los mismos filtros que en economics.
+
+4. Location: se incluye todos los datos referidos a la relación entre las zonas y la cantidad de viajes realizados, así como la ganancia total desagregada por zona.
+![image](https://github.com/user-attachments/assets/1395e33e-1a42-47aa-9290-3141ee33e8c4)
+
+En este caso los dos primeros gráficos muestran la distribución de pedidos y profit por zona, pudiendo filtrar por vendor o mes,  por último un mapa que muestra el volumen de viajes realizados por cada zona geográfica.
