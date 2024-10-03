@@ -23,9 +23,9 @@ Las mismas se detallan a continuación junto con las aclaraciones correspondient
 
 ## Hipótesis
 
-- A pesar de la cantidad de conceptos de descuentos la mayor parte de la composición de la facturación se compone de ganancia neta para el conductor
-- Hay una correspondencia entre la tarifa promedio y la variación de la facturación total
-- Hay un descenso de la demana en los días de fin de semana por la menor necesidad de movilidad
+- A pesar de la gran cantidad de conceptos de descuentos la mayor parte de la composición de la facturación se compone de ganancia neta para el conductor
+- Hay una relación directa entre variación la tarifa promedio y la variación de la facturación total
+- Hay un descenso de la demanda en los días de fin de semana por la menor necesidad de movilidad
 - La cantidad de viajes no necesariamente implica mayor ganancia para el conductor por zonas en donde aumentan los descuentos (ex: peajes, tarifas aeroportuarias)
 
 ## Transformación y carga de datos (ELT/ETL)
@@ -123,3 +123,24 @@ El primer gráfico corresponde a la variación mensual de Q de viajes realizados
 ![image](https://github.com/user-attachments/assets/1395e33e-1a42-47aa-9290-3141ee33e8c4)
 
 En este caso los dos primeros gráficos muestran la distribución de pedidos y profit por zona, pudiendo filtrar por vendor o mes,  por último un mapa que muestra el volumen de viajes realizados por cada zona geográfica.
+
+## Conclusiones
+
+En base al análisis realizado se concluye que:
+
+**A pesar de la gran cantidad de conceptos de descuentos la mayor parte de la composición de la facturación se compone de ganancia neta para el conductor: Verdadero ✅**
+Tal como se puede constatar en el gráfico de composición de la solapa de Economics el monto total facturado por tarifas representó en los últimos 12 meses entre 75-85% de la facturación total, seguida por las propinas que representaron en promedio un 13%. Es decir que, si bien el monto total de facturación cuenta con múltiples conceptos que refieren a descuentos, ya sea por gravaciones impositivas, tarifas aeroportuarias o peajes, el grueso de la misma corresponde a ganancia neta del conductor.
+
+**Hay una relación directa entre variación la tarifa promedio y la variación de la facturación total: Falso ❌**
+Si bien la tarifa promedio experimenta una caída en términos generales cuando cae la facturación, el promedio de variación MoM de la tarifa promedio es de un -7% mientras que la facturación total cae en promedio un -9%. Por lo cual la variación acompaña pero no en términos iguales.
+
+**Hay un descenso de la demanda en los días de fin de semana por la menor necesidad de movilidad: Verdadero ✅**
+El uso de taxis en la ciudad de Nueva York está relacionado en gran medida al transporte al lugar de trabajo, este es uno de los factores culturales que podría explicar que los fines de semana se observe una caída en comparación al volumen de viajes del resto de los días de la semana, acompañado de una pérdida de sentido de urgencia durante los días no laborales.
+
+**La cantidad de viajes no necesariamente implica mayor ganancia para el conductor por zonas en donde aumentan los descuentos (ex: peajes, tarifas aeroportuarias): Falso ❌**
+La relación general observada en la solapa de Location indicaría que efectivamente las zonas en donde se concentra el mayor volumen de viajes representan el mayor volumen de ganancia, independientemente del nivel de descuentos ligados a una zona específica. Esto es principalmente por la composición descripta anteriormente de la facturación, que es mayoritariamente ganancia.
+
+## Links
+- [Plan de métricas] (https://docs.google.com/spreadsheets/d/1Uvb99d4AfV_Cqxi_HMk6uombVXROjcfWchnstuc9f4U/edit?gid=0#gid=0)
+- [Reporte Power BI] 
+- [Perfil de LinkedIn] (https://www.linkedin.com/in/martina-volpe-56a20a15a/)
