@@ -81,7 +81,9 @@ Finalmente, se realiza la conexión con BigQuery y se importan las tablas del da
 ![image](https://github.com/user-attachments/assets/5d680919-c3ed-42f3-8065-7296f1164a85)
 - Creación de la tabla 'Medidas' y la creación de las medidas que serán empleadas en el repore dentro de la misma
 Las mismas se detallan a continuación por categoría:
+
 **Economics**
+
 Medidas referidas a descuentos sobre el monto total:
 - Airport fee total = sum(Fact_Trips1[airport_fee])
 - Imp surcharge total = sum(Fact_Trips1[imp_surcharge])
@@ -103,7 +105,9 @@ CALCULATE(
 CALCULATE(
     COUNTROWS(Fact_Trips1), 
     Fact_Trips1[tip_amount] > 0 )
+  
 **Demand**
+
 - Total trips = COUNT(Fact_Trips1[trip_id])
 - Trips per day = [Total trips]/31
 
