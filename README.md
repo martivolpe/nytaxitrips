@@ -142,5 +142,5 @@ La relación general observada en la solapa de Location indicaría que efectivam
 
 ## Links
 - [Plan de métricas] (https://docs.google.com/spreadsheets/d/1Uvb99d4AfV_Cqxi_HMk6uombVXROjcfWchnstuc9f4U/edit?gid=0#gid=0)
-- [Reporte Power BI] 
+- [Reporte Power BI] (https://app.powerbi.com/reportEmbed?reportId=8a0b1930-dc11-44c3-9838-cef52f5c87e5)
 - [Perfil de LinkedIn] (https://www.linkedin.com/in/martina-volpe-56a20a15a/)
