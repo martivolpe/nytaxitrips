@@ -10,6 +10,7 @@ Se empleó el dataset público de GCP (bigquery-public-data) “new_york_taxi_tr
 En línea con el enfoque de negocio planteado se elaboran 12 KPIs que obedecen a un análisis de demanda por un lado y un análisis financiero por el otro, con el objetivo de medir variables que permitan realizar proyecciones a futuro e identificar tendencias.
 
 Las mismas se detallan a continuación junto con las aclaraciones correspondientes tanto en su fórmula como en su utilidad.
+
 <img width="665" alt="image" src="https://github.com/user-attachments/assets/809aef54-dabb-477f-925c-e03b92a63a0f">
 
 [Detalle](https://docs.google.com/spreadsheets/d/1Uvb99d4AfV_Cqxi_HMk6uombVXROjcfWchnstuc9f4U/edit?gid=0#gid=0)
@@ -18,15 +19,15 @@ Las mismas se detallan a continuación junto con las aclaraciones correspondient
 
 - Identificar las tendencias de demanda a lo largo del año y de la semana para optimizar la planificación de la flota de taxis
 - Comprender la composición del ticket total de los viajes y la ganancia neta de los conductores
-- Analizar la relación entre la cantidad de viajes y de facturación de acuerdo a zonas de la ciudad
+- Analizar la relación entre la cantidad de viajes y el volumen de facturación de acuerdo a zonas de la ciudad
 - Entender en mayor profundidad los comportamientos de los pasajeros en cuanto a propinas y tarifas promedio
 
 ## Hipótesis
 
 - A pesar de la gran cantidad de conceptos de descuentos la mayor parte de la composición de la facturación se compone de ganancia neta para el conductor
-- Hay una relación directa entre variación la tarifa promedio y la variación de la facturación total
+- Hay una relación directa entre la variación la tarifa promedio y la variación de la facturación total
 - Hay un descenso de la demanda en los días de fin de semana por la menor necesidad de movilidad
-- La cantidad de viajes no necesariamente implica mayor ganancia para el conductor por zonas en donde aumentan los descuentos (ex: peajes, tarifas aeroportuarias)
+- La cantidad de viajes no necesariamente implica mayor ganancia para el conductor, por las zonas en donde hay un nivel elevado de descuentos (ex: peajes, tarifas aeroportuarias)
 
 ## Transformación y carga de datos (ELT/ETL)
 
@@ -36,7 +37,8 @@ En búsqueda de incrementar la calidad de los datos y traducir la base “cruda�
 - tlc_yellow_trips_2021-> en el proyecto bronze-layer renombrada yellow_trips_2021
 - tlc_yellow_trips_2022-> en el proyecto bronze-layer renombrada yellow_trips_2022
 - taxi_zone_geom-> en el proyecto bronze-layer renombrada zone_geom
-Finalmente se define avanzar con la tabla del 2021 y 2022.
+
+ FYI: Si bien este fue el primer enfoque al elegir las tablas para la bronze layer en BQ, a la hora de importar el dataset a Power BI se tuvo que avanzar solamente con la data del 2022 por el volumen de filas de la tabla fact (+30MM). 
 
 **Silver layer**: Transformación del proyecto bronce en un modelo de datos estrella con las siguientes tablas
 
@@ -48,8 +50,8 @@ Resultado final:
 <img width="452" alt="image" src="https://github.com/user-attachments/assets/71d3096e-0c01-463e-9ddf-af472a244d79">
 
 
+- Dim_location: consolidación de toda la data de zonas geográficas de los viajes referida, tomando la tabla de zonas geográficas que contenía el dataset original (taxi_zone_geom).
 
-- Dim_location: consolidación de toda la data de zonas geográficas de los viajes referida a la dimensión location, tomando la tabla de locaciones que contenía el dataset original.
 <img width="443" alt="image" src="https://github.com/user-attachments/assets/b7bca74f-ffa9-42b4-8a55-e9f2fb96401e">
 
 - Dim_date: consolidación de toda la data referida a la dimensión date (fechas) y creación de un date_id-> [Detalle](https://docs.google.com/spreadsheets/d/1Uvb99d4AfV_Cqxi_HMk6uombVXROjcfWchnstuc9f4U/edit?gid=388777468#gid=388777468)
