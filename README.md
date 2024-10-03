@@ -77,31 +77,35 @@ Finalmente, se realiza la conexión con BigQuery y se importan las tablas del da
 **Transformaciones**
 - Cargado el dataset la primera transformación realizada es la eliminación de la columna de trip_id para optimizar recursos, dado que era un ID con muchos caracteres, y su reemplazo por un ID incremental que luego se reordena para llevar al principio.
 - Creación de la tabla calendario
+
 ![image](https://github.com/user-attachments/assets/5d680919-c3ed-42f3-8065-7296f1164a85)
 - Creación de la tabla 'Medidas' y la creación de las medidas que serán empleadas en el repore dentro de la misma
 Las mismas se detallan a continuación por categoría:
 **Economics**
-Airport fee total = sum(Fact_Trips1[airport_fee]) 
-avg fare = average(Fact_Trips1[fare_amount])
-avg tip = AVERAGE(Fact_Trips1[tip_amount])
-Tip total = sum(Fact_Trips1[tip_amount])
-Fare total = sum(Fact_Trips1[fare_amount])
-Imp surcharge total = sum(Fact_Trips1[imp_surcharge])
-Monto Total = sum(Fact_Trips1[total_amount])
-MTA Total = sum(Fact_Trips1[mta_tax])
-Tolls total = sum(Fact_Trips1[tolls_amount])
-Total profit = sum(Fact_Trips1[total_profit])
-Trips w/o tip = 
+Medidas referidas a descuentos sobre el monto total:
+- Airport fee total = sum(Fact_Trips1[airport_fee])
+- Imp surcharge total = sum(Fact_Trips1[imp_surcharge])
+- MTA Total = sum(Fact_Trips1[mta_tax])
+- Tolls total = sum(Fact_Trips1[tolls_amount])
+Medidas referidas a los conceptos que representan ganancia (tarifa y propina) sobre el monto total:
+- avg fare = average(Fact_Trips1[fare_amount])
+- avg tip = AVERAGE(Fact_Trips1[tip_amount])
+- Tip total = sum(Fact_Trips1[tip_amount])
+- Fare total = sum(Fact_Trips1[fare_amount]
+- Total profit = sum(Fact_Trips1[total_profit])
+Monto Total = sum(Fact_Trips1[total_amount]) -- monto total bruto
+Medidas para calcular share de viajes con propina:
+- Trips w/o tip = 
 CALCULATE(
     COUNTROWS(Fact_Trips1), 
     Fact_Trips1[tip_amount] = 0 )
-Trips with tip = 
+- Trips with tip = 
 CALCULATE(
     COUNTROWS(Fact_Trips1), 
     Fact_Trips1[tip_amount] > 0 )
 **Demand**
-Total trips = COUNT(Fact_Trips1[trip_id])
-Trips per day = [Total trips]/31
+- Total trips = COUNT(Fact_Trips1[trip_id])
+- Trips per day = [Total trips]/31
 
 ## Visualización: creación del dashboard en Power BI
 
